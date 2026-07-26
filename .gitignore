@@ -1,0 +1,20 @@
+# Frontend (angularapp)
+angularapp/node_modules/
+angularapp/.angular/
+angularapp/dist/
+angularapp/package-lock.json
+npm-debug.log*
+
+# Backend (dotnetapp)
+dotnetapp/bin/
+dotnetapp/obj/
+
+# Tests
+TestProject/
+
+# IDE / OS
+.vs/
+.vscode/
+*.user
+.DS_Store
+Thumbs.db

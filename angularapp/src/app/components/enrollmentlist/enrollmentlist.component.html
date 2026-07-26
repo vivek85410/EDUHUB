@@ -1,0 +1,75 @@
+<div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="animate-fade-in mb-8">
+        <span class="px-4 py-2 bg-blue-100 text-blue-700 text-sm font-medium rounded-full">Management</span>
+        <h1 class="text-3xl font-bold text-gray-900 mt-3 mb-1">Enrollment Requests</h1>
+        <p class="text-gray-500">Approve or reject student enrollment requests</p>
+      </div>
+  
+      <!-- Skeleton -->
+      <div *ngIf="isLoading" class="space-y-4">
+        <div *ngFor="let _ of [1,2,3]" class="bg-white rounded-2xl p-6 shadow-sm animate-pulse border border-gray-100">
+          <div class="flex items-center space-x-4">
+            <div class="h-12 w-12 bg-gray-200 rounded-xl"></div>
+            <div class="flex-1 space-y-2">
+              <div class="h-4 bg-gray-200 rounded w-1/3"></div>
+              <div class="h-3 bg-gray-200 rounded w-1/4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Enrollment List -->
+      <div *ngIf="!isLoading" class="space-y-4">
+        <div *ngFor="let enrollment of enrollments; let i = index"
+             class="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-all duration-200 animate-fade-in border border-gray-100"
+             [style.animation-delay]="i * 0.05 + 's'">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-500/20">
+                <span class="text-lg font-bold text-white">
+                  {{ enrollment.user?.username?.charAt(0) || '?' }}
+                </span>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">{{ enrollment.user?.username || 'Unknown Student' }}</h3>
+                <p class="text-sm text-gray-500">{{ enrollment.user?.email }}</p>
+                <p class="text-xs text-gray-400">Student ID: {{ enrollment.userId }}</p>
+                <div class="mt-2">
+                  <p class="text-sm font-medium text-gray-700">Course: <span class="text-blue-600">{{ enrollment.course?.title || 'Unknown' }}</span></p>
+                </div>
+                <div class="flex items-center gap-3 mt-2">
+                  <span class="badge-purple">{{ enrollment.status }}</span>
+                  <span class="text-xs text-gray-400">
+                    {{ enrollment.enrollmentDate | date:'MMM d, y, h:mm a' }}
+                  </span>
+                </div>
+              </div>
+            </div>
+  
+            <div *ngIf="enrollment.status === 'Pending'" class="flex items-center gap-3">
+              <button (click)="approveEnrollment(enrollment.enrollmentId)" class="btn-success text-sm">
+                <svg class="w-4 h-4 mr-1.5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                Approve
+              </button>
+              <button (click)="rejectEnrollment(enrollment.enrollmentId)" class="btn-danger text-sm">
+                <svg class="w-4 h-4 mr-1.5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+                Reject
+              </button>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Empty -->
+        <div *ngIf="enrollments.length === 0" class="text-center py-16 bg-white rounded-2xl border border-gray-100">
+          <span class="text-6xl block mb-4">📋</span>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">No pending requests</h3>
+          <p class="text-gray-500">All enrollment requests have been processed</p>
+        </div>
+      </div>
+    </div>
+  </div>

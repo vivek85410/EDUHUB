@@ -1,0 +1,100 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl w-full animate-fade-in">
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-2xl shadow-lg shadow-blue-500/20 mb-4">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+          </svg>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-900">Add New Course</h1>
+        <p class="text-gray-500 mt-2">Create a course for students to enroll</p>
+      </div>
+  
+      <div *ngIf="errorMessage" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm mb-6 flex items-center gap-2">
+        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        {{ errorMessage }}
+      </div>
+  
+      <div class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-8">
+        <form #courseForm="ngForm" (ngSubmit)="addCourse()" class="space-y-5">
+          <div>
+            <label for="title" class="block text-sm font-medium text-gray-700 mb-1.5">Course Title</label>
+            <input id="title" name="title" type="text" [(ngModel)]="course.title" #title="ngModel" required
+                   class="input-field" placeholder="e.g. Introduction to Web Development"/>
+            <div *ngIf="title.invalid && title.touched" class="mt-1.5 text-sm text-red-600">Title is required.</div>
+          </div>
+  
+          <div>
+            <label for="description" class="block text-sm font-medium text-gray-700 mb-1.5">Description</label>
+            <textarea id="description" name="description" rows="4" [(ngModel)]="course.description" #description="ngModel" required
+                      class="input-field resize-none" placeholder="Describe what students will learn..."></textarea>
+            <div *ngIf="description.invalid && description.touched" class="mt-1.5 text-sm text-red-600">Description is required.</div>
+          </div>
+  
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="category" class="block text-sm font-medium text-gray-700 mb-1.5">Category</label>
+              <select id="category" name="category" [(ngModel)]="course.category" #category="ngModel" required class="select-field">
+                <option value="">Select category</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Mobile Development">Mobile Development</option>
+                <option value="Data Science">Data Science</option>
+                <option value="Machine Learning">Machine Learning</option>
+                <option value="Design">Design</option>
+                <option value="Business">Business</option>
+                <option value="Other">Other</option>
+              </select>
+              <div *ngIf="category.invalid && category.touched" class="mt-1.5 text-sm text-red-600">Category is required.</div>
+            </div>
+            <div>
+              <label for="level" class="block text-sm font-medium text-gray-700 mb-1.5">Level</label>
+              <select id="level" name="level" [(ngModel)]="course.level" required class="select-field">
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="courseStartDate" class="block text-sm font-medium text-gray-700 mb-1.5">Start Date</label>
+              <input id="courseStartDate" name="courseStartDate" type="date" [(ngModel)]="course.courseStartDate" #startDate="ngModel" required [min]="todayDate" class="input-field"/>
+              <div *ngIf="startDate.invalid && startDate.touched" class="mt-1.5 text-sm text-red-600">Start date is required and cannot be in the past.</div>
+            </div>
+            <div>
+              <label for="courseEndDate" class="block text-sm font-medium text-gray-700 mb-1.5">End Date</label>
+              <input id="courseEndDate" name="courseEndDate" type="date" [(ngModel)]="course.courseEndDate" #endDate="ngModel" required [min]="course.courseStartDate || todayDate" class="input-field"/>
+              <div *ngIf="endDate.invalid && endDate.touched" class="mt-1.5 text-sm text-red-600">End date is required.</div>
+            </div>
+          </div>
+
+          <div>
+            <label for="price" class="block text-sm font-medium text-gray-700 mb-1.5">Price (optional, leave blank for a free course)</label>
+            <input id="price" name="price" type="number" min="0" step="0.01" [(ngModel)]="course.price"
+                   class="input-field" placeholder="e.g. 499"/>
+          </div>
+
+          <div>
+            <label for="thumbnail" class="block text-sm font-medium text-gray-700 mb-1.5">Course Thumbnail (required, max 2MB)</label>
+            <input id="thumbnail" name="thumbnail" type="file" accept="image/*" (change)="onThumbnailSelected($event)"
+                   class="input-field" required/>
+            <img *ngIf="thumbnailPreviewUrl" [src]="thumbnailPreviewUrl" alt="Thumbnail preview" class="mt-3 h-32 rounded-xl object-cover border border-gray-200"/>
+          </div>
+
+          <div class="flex items-center gap-3 pt-4">
+            <button type="submit" [disabled]="courseForm.invalid || isLoading" class="btn-primary flex-1">
+              <svg *ngIf="isLoading" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+              </svg>
+              {{ isLoading ? 'Adding...' : 'Add Course' }}
+            </button>
+            <button type="button" (click)="router.navigate(['/educator/courses'])" class="btn-ghost">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

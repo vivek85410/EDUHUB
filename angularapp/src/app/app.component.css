@@ -1,0 +1,47 @@
+:host {
+    display: block;
+    min-height: 100vh;
+  }
+  
+  .nav-link {
+    padding: 0.625rem 0.875rem;
+    border-radius: 0.75rem;
+    color: rgb(71 85 105);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition:
+      color 150ms ease,
+      background-color 150ms ease;
+  }
+  
+  .nav-link:hover {
+    color: rgb(37 99 235);
+    background-color: rgb(239 246 255);
+  }
+  
+  .active-nav-link {
+    color: rgb(37 99 235);
+    background-color: rgb(239 246 255);
+  }
+  
+  .mobile-nav-link {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    color: rgb(51 65 85);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition:
+      color 150ms ease,
+      background-color 150ms ease;
+  }
+  
+  .mobile-nav-link:hover {
+    color: rgb(37 99 235);
+    background-color: rgb(239 246 255);
+  }
+  
+  .active-mobile-nav-link {
+    color: rgb(37 99 235);
+    background-color: rgb(239 246 255);
+  }

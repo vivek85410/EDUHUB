@@ -1,0 +1,243 @@
+<div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <!-- Hero Section -->
+    <div class="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 min-h-[500px] md:min-h-[550px]">
+      <!-- Animated Background -->
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-teal-500/20 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-400/10 rounded-full blur-3xl"></div>
+      </div>
+  
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row items-center justify-between min-h-[500px] md:min-h-[550px] py-16 lg:py-0">
+          <!-- Hero Text -->
+          <div class="text-center lg:text-left max-w-2xl">
+            <div class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-blue-200 text-sm font-medium mb-6 animate-fade-in">
+              <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
+              Empowering Education Through Technology
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-slide-up">
+              Learn Without
+              <span class="bg-gradient-to-r from-teal-300 to-blue-300 bg-clip-text text-transparent">Limits</span>
+            </h1>
+            <p class="text-lg md:text-xl text-blue-200 mb-8 max-w-xl animate-slide-up" style="animation-delay: 0.1s">
+              Access world-class education anytime, anywhere. Join thousands of learners and expert educators on our platform.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center gap-4 animate-slide-up" style="animation-delay: 0.2s">
+              <button (click)="exploreCourses()" 
+                      class="w-full sm:w-auto px-8 py-4 bg-white text-blue-700 font-semibold rounded-2xl hover:bg-blue-50 hover:scale-105 transition-all duration-300 shadow-xl shadow-blue-900/20">
+                <span class="flex items-center justify-center gap-2">
+                  Explore Courses
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  </svg>
+                </span>
+              </button>
+              <a routerLink="/registration" 
+                 class="w-full sm:w-auto px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-2xl hover:bg-white/10 hover:border-white/50 transition-all duration-300 text-center">
+                Get Started Free
+              </a>
+            </div>
+          </div>
+  
+          <!-- Hero 3D Scene -->
+          <div class="hidden lg:block relative">
+            <div class="w-[420px] h-[420px] relative">
+              <div class="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-teal-400/20 rounded-full blur-3xl animate-pulse-slow"></div>
+              <app-hero-scene class="absolute inset-0"></app-hero-scene>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Wave SVG Divider -->
+      <div class="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 60V30C240 0 480 0 720 30C960 60 1200 60 1440 30V60H0Z" fill="white"/>
+        </svg>
+      </div>
+    </div>
+  
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 animate-fade-in">
+          <span class="px-4 py-2 bg-blue-100 text-blue-700 text-sm font-medium rounded-full">Why Choose EduHub</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-4 mb-4">Everything You Need to Succeed</h2>
+          <p class="text-lg text-gray-600 max-w-2xl mx-auto">Our platform provides comprehensive tools for both educators and students</p>
+        </div>
+  
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div *ngFor="let service of services; let i = index" 
+               class="group relative bg-white rounded-2xl p-8 hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 border border-gray-100"
+               [style.animation-delay]="i * 0.1 + 's'">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-white rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="relative">
+              <div class="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-400 rounded-2xl flex items-center justify-center mb-5 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" [attr.d]="service.icon"/>
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-900 mb-3">{{ service.title }}</h3>
+              <p class="text-gray-600 leading-relaxed">{{ service.desc }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Courses Preview Section -->
+    <section class="py-20 bg-gradient-to-b from-gray-50 to-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+          <div class="animate-fade-in">
+            <span class="px-4 py-2 bg-blue-100 text-blue-700 text-sm font-medium rounded-full">Featured Courses</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-4">Start Learning Today</h2>
+            <p class="mt-2 text-gray-600">Hand-picked courses to get you started</p>
+          </div>
+          <button (click)="exploreCourses()" 
+                  class="hidden md:inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-medium rounded-2xl hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-200 mt-4 md:mt-0">
+            <span>View All Courses</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </button>
+        </div>
+  
+        <!-- Skeleton Loader -->
+        <div *ngIf="isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div *ngFor="let _ of [1,2,3]" class="bg-white rounded-2xl overflow-hidden shadow-sm">
+            <div class="h-48 skeleton"></div>
+            <div class="p-6 space-y-3">
+              <div class="h-5 skeleton w-3/4"></div>
+              <div class="h-3 skeleton w-full"></div>
+              <div class="h-3 skeleton w-1/2"></div>
+              <div class="flex space-x-2">
+                <div class="h-7 skeleton w-16 rounded-full"></div>
+                <div class="h-7 skeleton w-20 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Course Cards -->
+        <div *ngIf="!isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div *ngFor="let course of truncatedCourses; let i = index"
+               class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 cursor-pointer animate-fade-in"
+               [style.animation-delay]="i * 0.1 + 's'"
+               (click)="exploreCourses()">
+            <div class="h-48 relative overflow-hidden">
+              <img *ngIf="course.thumbnailUrl" [src]="'http://localhost:8080' + course.thumbnailUrl" alt="{{ course.title }}"
+                   class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"/>
+              <div *ngIf="!course.thumbnailUrl" class="w-full h-full bg-gradient-to-br from-blue-600 via-blue-500 to-teal-500 flex items-center justify-center">
+                <span class="text-6xl transform group-hover:scale-110 transition-transform duration-300">📚</span>
+              </div>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+              <div class="absolute bottom-4 left-4">
+                <span class="px-3 py-1.5 bg-white/20 backdrop-blur-sm text-white text-xs font-medium rounded-full">
+                  {{ course.category }}
+                </span>
+              </div>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="px-2.5 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">{{ course.level }}</span>
+                <span class="text-xs text-gray-400">{{ course.courseStartDate | date:'MMM d, y' }}</span>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">{{ course.title }}</h3>
+              <p class="text-sm text-gray-600 line-clamp-2 mb-4">{{ course.description }}</p>
+              <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                <div class="flex items-center text-sm text-gray-500">
+                  <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                  {{ course.courseStartDate | date:'MMM d' }} - {{ course.courseEndDate | date:'MMM d, y' }}
+                </div>
+                <span class="text-blue-600 group-hover:translate-x-1 transition-transform">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Mobile View All -->
+        <div class="mt-10 text-center md:hidden">
+          <button (click)="exploreCourses()" 
+                  class="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-semibold rounded-2xl hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-200">
+            <span>Explore All Courses</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Stats Section -->
+    <section class="py-20 relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900"></div>
+      <div class="absolute inset-0">
+        <div class="absolute top-10 left-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 right-10 w-72 h-72 bg-teal-500/20 rounded-full blur-3xl"></div>
+      </div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Our Impact in Numbers</h2>
+          <p class="text-blue-200 text-lg">Growing community of learners and educators</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <div class="p-8 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10 animate-fade-in">
+            <div class="text-5xl font-bold text-white mb-2">{{ courses.length }}+</div>
+            <div class="text-blue-300 font-medium">Active Courses</div>
+          </div>
+          <div class="p-8 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10 animate-fade-in" style="animation-delay: 0.1s">
+            <div class="text-5xl font-bold text-white mb-2">Educator</div>
+            <div class="text-blue-300 font-medium">& Student Roles</div>
+          </div>
+          <div class="p-8 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10 animate-fade-in" style="animation-delay: 0.2s">
+            <div class="text-5xl font-bold text-white mb-2">24/7</div>
+            <div class="text-blue-300 font-medium">Learning Access</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div class="md:col-span-2">
+            <div class="flex items-center space-x-2 mb-4">
+              <div class="w-9 h-9 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
+                <span class="text-white font-bold text-sm">EH</span>
+              </div>
+              <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">EduHub</span>
+            </div>
+            <p class="text-gray-500 max-w-md">Empowering education through technology. Providing world-class learning opportunities for everyone, everywhere.</p>
+          </div>
+          <div>
+            <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+            <ul class="space-y-2">
+              <li><a routerLink="/home" class="hover:text-white transition-colors">Home</a></li>
+              <li><a routerLink="/courses" class="hover:text-white transition-colors">Courses</a></li>
+              <li><a routerLink="/registration" class="hover:text-white transition-colors">Sign Up</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-white font-semibold mb-4">Support</h4>
+            <ul class="space-y-2">
+              <li><span class="hover:text-white transition-colors cursor-pointer">Help Center</span></li>
+              <li><span class="hover:text-white transition-colors cursor-pointer">Terms of Service</span></li>
+              <li><span class="hover:text-white transition-colors cursor-pointer">Privacy Policy</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 pt-8 text-center">
+          <p class="text-sm">© 2024 EduHub. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>

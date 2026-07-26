@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Custom Properties ===== */
+:root {
+  --primary: #2563eb;
+  --primary-light: #60a5fa;
+  --primary-dark: #1e40af;
+  --accent: #14b8a6;
+  --accent-light: #2dd4bf;
+  --surface: #ffffff;
+  --surface-alt: #f9fafb;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --gradient-primary: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #60a5fa 100%);
+  --gradient-warm: linear-gradient(135deg, #2563eb 0%, #14b8a6 100%);
+  --gradient-cool: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+}
+
+/* ===== Base Styles ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text-primary);
+  background-color: var(--surface-alt);
+}
+
+/* ===== Scrollbar Styling ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ===== Utility Classes ===== */
+@layer components {
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  .glass-card:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  }
+
+  .btn-primary {
+    @apply px-6 py-2.5 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium rounded-xl
+           hover:from-blue-700 hover:to-blue-600 hover:shadow-lg hover:shadow-blue-500/25
+           active:scale-[0.98] transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:active:scale-100;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-2.5 border-2 border-blue-200 text-blue-700 font-medium rounded-xl
+           hover:bg-blue-50 hover:border-blue-300
+           active:scale-[0.98] transition-all duration-200;
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 text-gray-600 font-medium rounded-lg
+           hover:bg-gray-100 hover:text-gray-900
+           active:scale-[0.98] transition-all duration-200;
+  }
+
+  .btn-danger {
+    @apply px-4 py-2 bg-gradient-to-r from-red-600 to-red-500 text-white font-medium rounded-xl
+           hover:from-red-700 hover:to-red-600 hover:shadow-lg hover:shadow-red-500/25
+           active:scale-[0.98] transition-all duration-200;
+  }
+
+  .btn-success {
+    @apply px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-500 text-white font-medium rounded-xl
+           hover:from-green-700 hover:to-emerald-600 hover:shadow-lg hover:shadow-green-500/25
+           active:scale-[0.98] transition-all duration-200;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl
+           text-gray-900 placeholder-gray-400
+           focus:border-blue-400 focus:ring-4 focus:ring-blue-100
+           transition-all duration-200 outline-none;
+  }
+
+  .input-field-error {
+    @apply border-red-300 focus:border-red-400 focus:ring-red-100;
+  }
+
+  .select-field {
+    @apply w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl
+           text-gray-900
+           focus:border-blue-400 focus:ring-4 focus:ring-blue-100
+           transition-all duration-200 outline-none appearance-none
+           bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20d%3D%22M6%209l6%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat;
+  }
+
+  .badge-purple {
+    @apply px-2.5 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full;
+  }
+
+  .badge-blue {
+    @apply px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-full;
+  }
+
+  .badge-green {
+    @apply px-2.5 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full;
+  }
+
+  .badge-red {
+    @apply px-2.5 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-full;
+  }
+
+  .badge-yellow {
+    @apply px-2.5 py-1 bg-yellow-100 text-yellow-700 text-xs font-medium rounded-full;
+  }
+
+  .skeleton {
+    @apply bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[length:200%_100%] animate-pulse rounded-xl;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* ===== Animations ===== */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s infinite;
+}
+
+/* ===== Focus Ring overrides ===== */
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 8px;
+}

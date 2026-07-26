@@ -1,0 +1,56 @@
+<div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="animate-fade-in mb-8">
+      <span class="px-4 py-2 bg-blue-100 text-blue-700 text-sm font-medium rounded-full">Management</span>
+      <h1 class="text-3xl font-bold text-gray-900 mt-3 mb-1">Student Feedback</h1>
+      <p class="text-gray-500">All feedback submitted by students across the platform</p>
+    </div>
+
+    <!-- Skeleton -->
+    <div *ngIf="isLoading" class="space-y-4">
+      <div *ngFor="let _ of [1,2,3]" class="bg-white rounded-2xl p-6 shadow-sm animate-pulse border border-gray-100">
+        <div class="h-4 bg-gray-200 rounded w-1/3 mb-2"></div>
+        <div class="h-3 bg-gray-200 rounded w-full"></div>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading" class="space-y-4">
+      <div *ngFor="let feedback of pagedFeedbacks; let i = index"
+           class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 animate-fade-in"
+           [style.animation-delay]="i * 0.05 + 's'">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl flex items-center justify-center flex-shrink-0">
+            <span class="text-sm font-bold text-white">{{ feedback.user?.username?.charAt(0) || '?' }}</span>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center justify-between">
+              <h3 class="font-semibold text-gray-900">{{ feedback.user?.username || 'Unknown Student' }}</h3>
+              <span class="text-xs text-gray-400">{{ feedback.date | date:'MMM d, y' }}</span>
+            </div>
+            <p class="text-xs text-gray-500 mb-2">{{ feedback.user?.email }}</p>
+            <p class="text-sm text-gray-700">{{ feedback.feedbackText }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty -->
+      <div *ngIf="feedbacks.length === 0" class="text-center py-16 bg-white rounded-2xl border border-gray-100">
+        <span class="text-6xl block mb-4">💬</span>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">No feedback yet</h3>
+        <p class="text-gray-500">Student feedback will appear here</p>
+      </div>
+
+      <!-- Pagination -->
+      <div *ngIf="feedbacks.length > 0" class="flex items-center justify-center gap-2 mt-8">
+        <button class="btn-ghost text-sm px-3 py-1.5" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">Prev</button>
+        <button *ngFor="let p of pageNumbers"
+                (click)="goToPage(p)"
+                class="w-9 h-9 rounded-lg text-sm font-medium transition-colors"
+                [ngClass]="p === currentPage ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-100'">
+          {{ p }}
+        </button>
+        <button class="btn-ghost text-sm px-3 py-1.5" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">Next</button>
+      </div>
+    </div>
+  </div>
+</div>

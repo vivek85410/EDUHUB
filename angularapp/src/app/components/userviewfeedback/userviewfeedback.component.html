@@ -1,0 +1,55 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-8 animate-fade-in">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-teal-500 rounded-2xl shadow-lg shadow-blue-500/20 mb-4">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+      </div>
+      <h1 class="text-3xl font-bold text-gray-900">My Feedback</h1>
+      <p class="mt-2 text-gray-500">Track your submitted feedback</p>
+    </div>
+
+    <!-- Skeleton -->
+    <div *ngIf="isLoading" class="space-y-4">
+      <div *ngFor="let _ of [1,2]" class="bg-white rounded-2xl p-6 shadow-sm animate-pulse border border-gray-100">
+        <div class="h-3 bg-gray-200 rounded w-full"></div>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading" class="space-y-4">
+      <div *ngFor="let feedback of pagedFeedbacks; let i = index"
+           class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 animate-fade-in flex items-start justify-between gap-4"
+           [style.animation-delay]="i * 0.05 + 's'">
+        <div>
+          <p class="text-sm text-gray-700 mb-2">{{ feedback.feedbackText }}</p>
+          <span class="text-xs text-gray-400">{{ feedback.date | date:'MMM d, y, h:mm a' }}</span>
+        </div>
+        <button (click)="deleteFeedback(feedback.feedbackId)" class="text-red-500 hover:bg-red-50 p-2 rounded-xl transition-colors flex-shrink-0">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Empty -->
+      <div *ngIf="feedbacks.length === 0" class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 p-8 text-center py-16">
+        <span class="text-6xl block mb-4">📝</span>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">Your Feedback History</h3>
+        <p class="text-gray-500 max-w-md mx-auto">You haven't submitted any feedback yet.</p>
+      </div>
+
+      <!-- Pagination -->
+      <div *ngIf="feedbacks.length > 0" class="flex items-center justify-center gap-2 mt-8">
+        <button class="btn-ghost text-sm px-3 py-1.5" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">Prev</button>
+        <button *ngFor="let p of pageNumbers"
+                (click)="goToPage(p)"
+                class="w-9 h-9 rounded-lg text-sm font-medium transition-colors"
+                [ngClass]="p === currentPage ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-100'">
+          {{ p }}
+        </button>
+        <button class="btn-ghost text-sm px-3 py-1.5" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">Next</button>
+      </div>
+    </div>
+  </div>
+</div>

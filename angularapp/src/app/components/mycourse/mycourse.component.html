@@ -1,0 +1,61 @@
+<div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="animate-fade-in mb-8">
+        <span class="px-4 py-2 bg-blue-100 text-blue-700 text-sm font-medium rounded-full">My Learning</span>
+        <h1 class="text-3xl font-bold text-gray-900 mt-3 mb-1">My Courses</h1>
+        <p class="text-gray-500">Courses you are enrolled in</p>
+      </div>
+  
+      <!-- Skeleton -->
+      <div *ngIf="isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngFor="let _ of [1,2,3]" class="bg-white rounded-2xl overflow-hidden shadow-sm">
+          <div class="h-40 skeleton"></div>
+          <div class="p-6 space-y-3">
+            <div class="h-5 skeleton w-3/4"></div>
+            <div class="h-3 skeleton w-full"></div>
+            <div class="h-3 skeleton w-1/3"></div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Course Grid -->
+      <div *ngIf="!isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngFor="let enrollment of enrollments; let i = index"
+             class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer animate-fade-in border border-gray-100"
+             [style.animation-delay]="i * 0.05 + 's'"
+             (click)="openCourse(enrollment)">
+          <div class="h-40 relative overflow-hidden">
+            <img *ngIf="enrollment.course?.thumbnailUrl" [src]="'http://localhost:8080' + enrollment.course?.thumbnailUrl" alt="{{ enrollment.course?.title }}"
+                 class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"/>
+            <div *ngIf="!enrollment.course?.thumbnailUrl" class="w-full h-full bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center">
+              <span class="text-5xl transform group-hover:scale-110 transition-transform duration-300">🎓</span>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+            <span *ngIf="enrollment.status === 'Enrolled'" class="absolute top-3 right-3 px-3 py-1 bg-green-500 text-white text-xs font-medium rounded-full shadow-lg">
+              Active
+            </span>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">{{ enrollment.course?.title || 'Unknown Course' }}</h3>
+            <p class="text-sm text-gray-600 line-clamp-2 mb-4">{{ enrollment.course?.description }}</p>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+              <span class="badge-purple">{{ enrollment.status }}</span>
+              <span class="text-sm text-gray-500">
+                {{ enrollment.enrollmentDate | date:'MMM d, y' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Empty -->
+      <div *ngIf="!isLoading && enrollments.length === 0" class="text-center py-16 bg-white rounded-2xl border border-gray-100">
+        <span class="text-6xl block mb-4">📚</span>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">No enrolled courses</h3>
+        <p class="text-gray-500 mb-6">Browse the course catalog to enroll in courses</p>
+        <a routerLink="/courses" class="btn-primary inline-block">
+          Browse Courses
+        </a>
+      </div>
+    </div>
+  </div>

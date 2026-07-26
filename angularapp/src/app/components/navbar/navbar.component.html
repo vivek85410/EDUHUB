@@ -1,0 +1,191 @@
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <a routerLink="/home" class="flex items-center space-x-2 group">
+            <div class="w-9 h-9 bg-gradient-to-br from-blue-600 to-teal-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all duration-300">
+              <span class="text-white font-bold text-sm">EH</span>
+            </div>
+            <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent">EduHub</span>
+          </a>
+        </div>
+  
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center space-x-1">
+          <a routerLink="/home" routerLinkActive="text-blue-600 bg-blue-50" class="px-3 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">
+            Home
+          </a>
+          <a routerLink="/courses" routerLinkActive="text-blue-600 bg-blue-50" class="px-3 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">
+            Courses
+          </a>
+          <a routerLink="/about" routerLinkActive="text-blue-600 bg-blue-50" class="px-3 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">
+            About Us
+          </a>
+
+          <!-- Search Bar -->
+          <div class="relative mx-4">
+            <div class="flex items-center">
+              <input
+                type="text"
+                [(ngModel)]="searchTerm"
+                (input)="onSearchInput()"
+                (keyup.enter)="onSearch()"
+                placeholder="Search courses..."
+                class="bg-gray-100 text-gray-900 text-sm rounded-xl pl-10 pr-4 py-2.5 w-48 lg:w-64 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:bg-white placeholder-gray-400 transition-all duration-200"
+              />
+              <svg class="absolute left-3 top-2.5 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </div>
+            <!-- Search Dropdown -->
+            <div *ngIf="showSearchDropdown" class="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-gray-100 max-h-60 overflow-y-auto z-50">
+              <button
+                *ngFor="let course of courses"
+                (click)="goToCourse(course.courseId)"
+                class="w-full text-left px-4 py-3 hover:bg-blue-50 transition-colors duration-150 border-b border-gray-50 last:border-b-0"
+              >
+                <p class="text-sm font-medium text-gray-900">{{ course.title }}</p>
+                <p class="text-xs text-gray-500">{{ course.category }} • {{ course.level }}</p>
+              </button>
+            </div>
+          </div>
+  
+          <!-- Educator Links -->
+          <ng-container *ngIf="isLoggedIn && userRole === 'Educator'">
+            <a routerLink="/educator/courses" routerLinkActive="text-blue-600 bg-blue-50" class="px-3 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">
+              My Courses
+            </a>
+            <a routerLink="/enrollments" routerLinkActive="text-blue-600 bg-blue-50" class="px-3 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">
+              Requests
+            </a>
+            <a routerLink="/educator/materials" routerLinkActive="text-blue-600 bg-blue-50" class="px-3 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">
+              Materials
+            </a>
+            <a routerLink="/admin/feedback" routerLinkActive="text-blue-600 bg-blue-50" class="px-3 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">
+              Feedback
+            </a>
+          </ng-container>
+  
+          <!-- Student Links -->
+          <ng-container *ngIf="isLoggedIn && userRole === 'Student'">
+            <a routerLink="/mycourses" routerLinkActive="text-blue-600 bg-blue-50" class="px-3 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">
+              My Courses
+            </a>
+            <a routerLink="/myfeedback" routerLinkActive="text-blue-600 bg-blue-50" class="px-3 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">
+              My Feedback
+            </a>
+          </ng-container>
+        </div>
+  
+        <!-- Auth Buttons -->
+        <div class="hidden md:flex items-center space-x-3">
+          <ng-container *ngIf="!isLoggedIn; else loggedIn">
+            <button (click)="login()" class="btn-primary text-sm">
+              Login
+            </button>
+            <a routerLink="/registration" class="btn-secondary text-sm">
+              Sign Up
+            </a>
+          </ng-container>
+          <ng-template #loggedIn>
+            <div class="flex items-center space-x-3">
+              <!-- Notification bell (Educator only) -->
+              <a *ngIf="userRole === 'Educator'" routerLink="/enrollments" class="relative p-2 rounded-xl text-gray-500 hover:text-blue-600 hover:bg-blue-50 transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                </svg>
+                <span *ngIf="(pendingCount$ | async) as count" class="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 flex items-center justify-center bg-red-500 text-white text-[10px] font-bold rounded-full">
+                  {{ count }}
+                </span>
+              </a>
+              <a routerLink="/profile" class="flex items-center space-x-2 px-3 py-1.5 bg-blue-50 rounded-xl hover:bg-blue-100 transition-all">
+                <div class="w-7 h-7 rounded-lg overflow-hidden bg-gradient-to-br from-blue-600 to-teal-500 flex items-center justify-center">
+                  <img *ngIf="profilePictureUrl" [src]="profilePictureUrl" alt="Profile" class="w-full h-full object-cover"/>
+                  <span *ngIf="!profilePictureUrl" class="text-white text-xs font-bold">{{ username?.charAt(0) || 'U' }}</span>
+                </div>
+                <span class="text-sm text-gray-700 font-medium">{{ username }}</span>
+                <span class="px-2 py-0.5 text-xs rounded-full bg-blue-200 text-blue-700 font-medium">{{ userRole }}</span>
+              </a>
+              <button (click)="logout()" class="btn-ghost text-sm">
+                <svg class="w-4 h-4 mr-1.5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                </svg>
+                Logout
+              </button>
+            </div>
+          </ng-template>
+        </div>
+  
+        <!-- Mobile menu button -->
+        <div class="md:hidden flex items-center">
+          <button (click)="toggleMobileMenu()" class="p-2 rounded-xl text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none transition-all duration-200">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path *ngIf="!isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+              <path *ngIf="isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Mobile Menu -->
+    <div *ngIf="isMobileMenuOpen" class="md:hidden bg-white border-t border-gray-100 shadow-lg animate-slide-down">
+      <div class="px-4 py-3 space-y-2">
+        <!-- Mobile Search -->
+        <div class="relative mb-3">
+          <input
+            type="text"
+            [(ngModel)]="searchTerm"
+            (input)="onSearchInput()"
+            (keyup.enter)="onSearch()"
+            placeholder="Search courses..."
+            class="w-full bg-gray-100 text-gray-900 text-sm rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:bg-white placeholder-gray-400"
+          />
+          <svg class="absolute left-3 top-3.5 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </div>
+  
+        <a routerLink="/home" (click)="isMobileMenuOpen = false" class="block px-3 py-2.5 rounded-xl text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all">Home</a>
+        <a routerLink="/courses" (click)="isMobileMenuOpen = false" class="block px-3 py-2.5 rounded-xl text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all">Courses</a>
+        <a routerLink="/about" (click)="isMobileMenuOpen = false" class="block px-3 py-2.5 rounded-xl text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all">About Us</a>
+        <a *ngIf="isLoggedIn" routerLink="/profile" (click)="isMobileMenuOpen = false" class="block px-3 py-2.5 rounded-xl text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all">Profile</a>
+  
+        <ng-container *ngIf="isLoggedIn && userRole === 'Educator'">
+          <div class="border-t border-gray-100 pt-2 mt-2">
+            <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Educator</p>
+            <a routerLink="/educator/courses" (click)="isMobileMenuOpen = false" class="block px-3 py-2.5 rounded-xl text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all">My Courses</a>
+            <a routerLink="/enrollments" (click)="isMobileMenuOpen = false" class="block px-3 py-2.5 rounded-xl text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all">Requests</a>
+            <a routerLink="/educator/materials" (click)="isMobileMenuOpen = false" class="block px-3 py-2.5 rounded-xl text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all">Materials</a>
+            <a routerLink="/admin/feedback" (click)="isMobileMenuOpen = false" class="block px-3 py-2.5 rounded-xl text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all">Feedback</a>
+          </div>
+        </ng-container>
+  
+        <ng-container *ngIf="isLoggedIn && userRole === 'Student'">
+          <div class="border-t border-gray-100 pt-2 mt-2">
+            <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Student</p>
+            <a routerLink="/mycourses" (click)="isMobileMenuOpen = false" class="block px-3 py-2.5 rounded-xl text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all">My Courses</a>
+            <a routerLink="/myfeedback" (click)="isMobileMenuOpen = false" class="block px-3 py-2.5 rounded-xl text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all">My Feedback</a>
+          </div>
+        </ng-container>
+  
+        <div class="border-t border-gray-100 pt-2 mt-2">
+          <ng-container *ngIf="!isLoggedIn">
+            <a routerLink="/login" (click)="isMobileMenuOpen = false" class="block px-3 py-2.5 rounded-xl text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all">Login</a>
+            <a routerLink="/registration" (click)="isMobileMenuOpen = false" class="block px-3 py-2.5 rounded-xl text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all">Sign Up</a>
+          </ng-container>
+          <ng-container *ngIf="isLoggedIn">
+            <button (click)="logout(); isMobileMenuOpen = false" class="w-full text-left px-3 py-2.5 rounded-xl text-base font-medium text-red-600 hover:bg-red-50 transition-all">
+              <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+              </svg>
+              Logout
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- Spacer for fixed navbar -->
+  <div class="h-16"></div>
