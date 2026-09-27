@@ -120,3 +120,25 @@ Notes
 Email-based OTP flows require valid SMTP configuration.
 Uploaded learning materials and profile/course images are stored by the backend under its web root.
 Configure local database, email, and key settings before running the application.
+
+
+## Screenshots
+
+### Home
+<img width="1440" height="1350" alt="home" src="https://github.com/user-attachments/assets/3529f390-fdc7-4ff2-ae88-2248a37a9a62" />
+
+
+### Course Catalog
+<img width="1440" height="1100" alt="courses" src="https://github.com/user-attachments/assets/11842c3f-8ba7-4a26-85e7-b3ee4089dc36" />
+
+
+### About
+<img width="1440" height="2200" alt="about" src="https://github.com/user-attachments/assets/995bd7a7-1baf-4b2e-9113-16eefc3ffec1" />
+
+
+### Login
+<img width="1440" height="1000" alt="login" src="https://github.com/user-attachments/assets/a9fe82f7-cc2d-4446-97e6-8c4a8691326d" />
+
+
+### Registration
+<img width="1440" height="1400" alt="registration" src="https://github.com/user-attachments/assets/9f4b3dd0-0d23-41c4-973d-b872f994d5c5" />
