@@ -60,3 +60,63 @@ The application uses an Angular frontend and an ASP.NET Core Web API backend, wi
 ├── angularapp/    # Angular frontend
 ├── dotnetapp/     # ASP.NET Core API, data models, services, and migrations
 └── TestProject/   # Project tests
+
+```
+
+Prerequisites
+Install the following before running EDUHUB:
+
+.NET 6 SDK
+Node.js and npm
+SQL Server (local or remote)
+Git
+Running Locally
+1. Configure the backend
+Configure the backend with:
+
+A SQL Server connection string.
+JWT issuer and audience settings.
+RSA public and private key files at the paths expected by the backend.
+SMTP settings for registration and password-recovery OTP emails.
+Keep credentials and private keys out of source control. Use local development secrets or environment variables for sensitive settings.
+
+2. Apply database migrations
+From the repository root, run:
+
+cd dotnetapp
+dotnet tool restore
+dotnet ef database update
+
+3. Start the backend API
+From the dotnetapp directory:
+
+dotnet run
+
+The API is configured to run at http://localhost:8080 with the current launch profile. In Development mode, Swagger UI is available at:
+
+http://localhost:8080/swagger
+
+4. Start the Angular frontend
+Open another terminal and run:
+
+cd angularapp
+npm install
+npm start
+
+The Angular development server is configured for:
+http://localhost:4200
+
+The frontend services currently call the API at http://localhost:8080. If you run the API at a different address, update the frontend API base URLs accordingly.
+
+Testing
+Run the Angular tests with:
+
+cd angularapp
+npm test
+
+Run backend tests using the solution and test project configuration in dotnetapp and TestProject.
+
+Notes
+Email-based OTP flows require valid SMTP configuration.
+Uploaded learning materials and profile/course images are stored by the backend under its web root.
+Configure local database, email, and key settings before running the application.
